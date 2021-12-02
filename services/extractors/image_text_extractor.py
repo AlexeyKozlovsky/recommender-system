@@ -50,7 +50,7 @@ class ImageTextExtractor:
         next_keyframe = keyframe_interval / 2
         finished_frames = 0
         while True:
-            if finished_frames == 100:
+            if finished_frames == cur_frames:
                 break
             video.set(cv2.CAP_PROP_POS_FRAMES, int(next_keyframe))
             success,image = video.read()
