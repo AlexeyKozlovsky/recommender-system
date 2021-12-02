@@ -49,11 +49,12 @@ class SpeechToTextExtractor:
 
         return result
     
-    def get_info(self, input_path, out_path=None):
+    def get_info(self, input_path, out_path=None, name=None):
         vosk.SetLogLevel(-1)
         
         temp_audio_path = 'temp.wav'
         clip = mp.VideoFileClip(input_path)
+        print(clip.audio)
         clip.audio.write_audiofile(temp_audio_path)
 
         sample_rate = 16000
@@ -70,8 +71,9 @@ class SpeechToTextExtractor:
         
         if os.path.isfile(temp_audio_path):
             os.remove(temp_audio_path)
-        
+
+        df.append({'conf': name}, ignore_index=True)
         if out_path is not None:
             df.to_csv(out_path, index=False)
             
-        return self._to_dict(df)
+        return df

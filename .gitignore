@@ -1,2 +1,5 @@
 .idea
 *.puml
+/venv
+/resources
+/nn_models

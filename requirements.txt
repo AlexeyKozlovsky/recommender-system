@@ -1,0 +1,6 @@
+vosk==0.3.22
+numpy
+pandas
+librosa==0.8.0
+moviepy
+youtube_dl
