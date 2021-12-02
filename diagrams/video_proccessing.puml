@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+skinparam monochrome true
+skinparam maxmessagesize 100
+
+
+Video -> SpeechToTextExtractor: Аудио помещается в экстрактор для выделения текста из речи
+activate SpeechToTextExtractor
+SpeechToTextExtractor -> Composer: Результаты текста речи помещаются в Composer
+deactivate SpeechToTextExtractor
+activate Composer
+Video -> ImageTextExtractor: Видео подается для веделения текста из кадров
+activate ImageTextExtractor
+ImageTextExtractor -> Composer: Результаты текста из кадров помещаются в Composer
+deactivate ImageTextExtractor
+Video -> ImageObjectsExtractor: Видео подается для выделения объектов на кадрах
+activate ImageObjectsExtractor
+ImageObjectsExtractor -> Composer: Результаты по объектам помещаются в Composer
+deactivate ImageObjectsExtractor
+alt Если найден человек (люди)
+Composer -> PersonCharExtractor: Отрезки видео с людьми подаются для вделения персональных характеристик
+activate PersonCharExtractor
+PersonCharExtractor -> Composer: Резултьтаты с персональными характеристиками идут в Composer
+deactivate PersonCharExtractor
+Composer -> EmotionsExtractor: Отрезки видео с людьми подается для выделения эмоций
+activate EmotionsExtractor
+EmotionsExtractor -> Composer: Результаты по эмоциям помещаются в Composer
+deactivate EmotionsExtractor
+end alt
+deactivate PersonCharExtractor
+Video -> ColorMapExtractor: Видео подается для выделение карты цветов
+activate ColorMapExtractor
+ColorMapExtractor -> Composer: Результаты выделения карты цвета помещаются в Composer
+deactivate ColorMapExtractor
+Composer -> StatiticsDB: Composer обрабатывает все результаты, осуществляет пост-обработку формирует финальный результат и помещает его в БД
+activate StatiticsDB
+@enduml
