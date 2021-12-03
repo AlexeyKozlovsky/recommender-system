@@ -22,8 +22,8 @@ class Parser:
         url: ссылка на видео
         out_path: путь к файлу csv с результатами распознанных слов"""
 
-        temp_video_path = 'temp.mp4'
-        ydl_opts = {'outtmpl': temp_video_path, 'format': '18'}
+        temp_video_path = 'temp.mp3'
+        ydl_opts = {'outtmpl': temp_video_path, 'format': '140'}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
