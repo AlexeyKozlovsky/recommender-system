@@ -4,9 +4,11 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 
 
-load_dotenv('/api/.env')
+load_dotenv('.env')
 
-db = MongoClient(host=os.getenv('mongodb_host'),
+print(os.getenv('mongodb_host'), int(os.getenv('mongodb_port')))
+
+db = MongoClient(os.getenv('mongodb_host'),
                  port=int(os.getenv('mongodb_port')),
-                 username=os.getenv('mongodb_root_username'),
-                 password=os.getenv('mongodb_root_password'))[os.getenv('mongodb_db_name')]
+                 username=os.getenv('mongodb_username'),
+                 password=os.getenv('mongodb_password'))[os.getenv('mongodb_name')]
