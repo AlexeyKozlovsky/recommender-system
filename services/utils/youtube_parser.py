@@ -1,5 +1,3 @@
-
-
 import os
 import time
 
@@ -27,12 +25,12 @@ class Parser:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
-        result_df = self.speech_to_text_extractor.get_info(temp_video_path, out_path, url)
+        result_json = self.speech_to_text_extractor.get_info(temp_video_path, out_path, url)
 
         if os.path.exists(temp_video_path):
             os.remove(temp_video_path)
 
-        return result_df
+        return result_json
 
     def from_csv(self, csv_path, out_path):
         """Метод для парсинга видео по ссылкам из csv файла
