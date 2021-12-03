@@ -18,3 +18,4 @@ fer
 easyocr
 transliterate
 pytest-shutil
+python-multipart

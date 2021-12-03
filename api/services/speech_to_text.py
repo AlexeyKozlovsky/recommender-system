@@ -1,3 +1,7 @@
+import shutil
+
+from fastapi import UploadFile
+
 from api.consts.db import db
 from api.utils.post_processing import words_to_plain_text
 from services.extractors.speech_to_text_extractor import SpeechToTextExtractor
@@ -34,3 +38,15 @@ def get_words_service(url: str):
             '$set': {'words': words_json, 'plain_text': words_to_plain_text(words_json)}
         })
     return result
+
+
+def get_words_from_file_service(input_file: UploadFile):
+    temp_file_name = 'temp.mp4'
+    with open(temp_file_name, 'wb') as buf:
+        shutil.copyfileobj(input_file.file, buf)
+
+    res = extractor.get_info(temp_file_name, None)
+    return {
+        'message': 'success',
+        'words': res
+    }
