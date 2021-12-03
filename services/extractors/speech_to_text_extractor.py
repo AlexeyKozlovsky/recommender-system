@@ -64,17 +64,28 @@ class SpeechToTextExtractor:
         model = vosk.Model(self.audio_model_path)
         recognizer = vosk.KaldiRecognizer(model, sample_rate)
 
+        result_json = []
+
         res = self._transcribe_words(recognizer, int16)
         if not res:
             return
-        df = pd.DataFrame.from_records(res)
-        df = df.sort_values('start')
+
+        # for current_res in res:
+        #     result_json.append({
+        #         'conf': current_res[0],
+        #         'time_end': current_res[1],
+        #         'time_start': current_res[2],
+        #         'word': current_res[3]
+        #     })
+
+        # df = pd.DataFrame.from_records(res)
+        # df = df.sort_values('start')
         
         if os.path.isfile(input_path):
             os.remove(input_path)
 
-        df.append({'conf': name}, ignore_index=True)
-        if out_path is not None:
-            df.to_csv(out_path, index=False)
+        # df.append({'conf': name}, ignore_index=True)
+        # if out_path is not None:
+        #     df.to_csv(out_path, index=False)
             
-        return df
+        return res

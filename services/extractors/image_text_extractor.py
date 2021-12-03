@@ -8,7 +8,6 @@ import pandas as pd
 import requests
 import time
 from base64 import b64encode
-from IPython.display import Image
 from pylab import rcParams
 import io
 

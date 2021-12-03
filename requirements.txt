@@ -12,3 +12,5 @@ google-cloud-vision
 pydantic
 fastapi
 uvicorn
+pymongo
+python-dotenv
