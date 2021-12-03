@@ -1,0 +1,13 @@
+INFO:     Started server process [11911]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     193.33.124.50:60996 - "GET /docs HTTP/1.1" 200 OK
+INFO:     193.33.124.50:60996 - "GET /openapi.json HTTP/1.1" 200 OK
+[youtube] KPjxV20iI30: Downloading webpage
+[download] temp.mp3 has already been downloaded
+[download] 100% of 2.47MiB
+[ffmpeg] Correcting container in "temp.mp3"
+ERROR (VoskAPI:ReadConfigFile():parse-options.cc:462) Cannot open config file: nn_models/audio_models/vosk-model-ru-0.22/mfcc.conf
+terminate called after throwing an instance of 'kaldi::KaldiFatalError'
+  what():  kaldi::KaldiFatalError

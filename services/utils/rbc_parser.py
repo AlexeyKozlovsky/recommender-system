@@ -13,7 +13,7 @@ class rbk_parse:
     def __init__(self, num_pages=1):
         self.n = num_pages
         self.rbc_articles = []
-        self.delt = ['</div>\n', '<em>', '</em>', '&', '\"/>', '"og:description"', '<p>', '</p>', '<title>', '</title>', '<meta name=', '"description"',  'content="', '&amp;', 'laquo;', 'raquo;', 'nbsp;', 'mdash;']
+        self.delt = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '—', '</div>\n', '<em>', '</em>', '&', '\"/>', '"og:description"', '<p>', '</p>', '<title>', '</title>', '<meta name=', '"description"',  'content="', '&amp;', 'laquo;', 'raquo;', 'nbsp;', 'mdash;']
         self.data_to_write = []
     
     def rbc_collect(self):
@@ -28,7 +28,7 @@ class rbk_parse:
         articles = articles_reg.findall(articles)[:self.n]
         self.rbc_articles = articles
     
-    def get_text(self, output_path):
+    def get_text(self):
         self.rbc_collect()
         for art in self.rbc_articles:
             page = requests.get(art)
@@ -54,5 +54,10 @@ class rbk_parse:
                 desc = desc.replace(rf, '')
                 for i in range(len(txtt)):
                     txtt[i] = txtt[i].replace(rf, '')
-            self.data_to_write.append({'title' : title, 'description' : desc, 'text' : txtt})
-        io.open(output_path, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
+            self.data_to_write.append(title.split(' '))
+            self.data_to_write.append(desc.split(' '))
+            for tx in txtt:
+                self.data_to_write.append(tx.split(' '))
+        a = sum(self.data_to_write, [])
+        a = list(filter(lambda x: x!= '', a))
+        return a
