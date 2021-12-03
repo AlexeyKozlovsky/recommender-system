@@ -10,6 +10,7 @@ import time
 from base64 import b64encode
 from IPython.display import Image
 from pylab import rcParams
+import io
 
 class ImageTextExtractor:
     def __init__(self, sourse_path, output_path, ap_data):
@@ -60,5 +61,4 @@ class ImageTextExtractor:
             self.requestOCR(jpg_as_text)
             finished_frames += 1
             next_keyframe += keyframe_interval
-        with open(self.output_p , 'w') as f:
-            json.dump(self.data_to_write, f)
+        io.open(self.output_p, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
