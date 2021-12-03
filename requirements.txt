@@ -17,3 +17,4 @@ python-dotenv
 fer
 easyocr
 transliterate
+pytest-shutil
