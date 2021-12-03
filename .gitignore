@@ -6,3 +6,7 @@
 *.env
 
 *__pycache__
+
+nohup.out
+*.csv
+*.json
