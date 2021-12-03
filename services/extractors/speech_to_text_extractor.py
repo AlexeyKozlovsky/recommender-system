@@ -51,14 +51,13 @@ class SpeechToTextExtractor:
     
     def get_info(self, input_path, out_path=None, name=None):
         vosk.SetLogLevel(-1)
-        
-        temp_audio_path = 'temp.wav'
-        clip = mp.VideoFileClip(input_path)
-        print(clip.audio)
-        clip.audio.write_audiofile(temp_audio_path)
+
+        # clip = mp.VideoFileClip(input_path)
+        # print(clip.audio)
+        # clip.audio.write_audiofile(temp_audio_path)
 
         sample_rate = 16000
-        audio, sr = librosa.load(temp_audio_path, sr=sample_rate)
+        audio, sr = librosa.load(input_path, sr=sample_rate)
 
         int16 = np.int16(audio * 32768).tobytes()
 
@@ -66,11 +65,13 @@ class SpeechToTextExtractor:
         recognizer = vosk.KaldiRecognizer(model, sample_rate)
 
         res = self._transcribe_words(recognizer, int16)
+        if not res:
+            return
         df = pd.DataFrame.from_records(res)
         df = df.sort_values('start')
         
-        if os.path.isfile(temp_audio_path):
-            os.remove(temp_audio_path)
+        if os.path.isfile(input_path):
+            os.remove(input_path)
 
         df.append({'conf': name}, ignore_index=True)
         if out_path is not None:
