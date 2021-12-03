@@ -72,7 +72,7 @@ class ImageTextExtractor:
             next_keyframe += keyframe_interval
         io.open(self.output_p, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
     
-    def Get_dict_of_phrases_times(sourse_path, output_path):
+    def Get_dict_of_phrases_times(self, sourse_path, output_path):
         with open(sourse_path, 'r') as read_file:
             data = json.load(read_file)
         phrases = []
