@@ -4,3 +4,5 @@
 /resources
 /nn_models
 *.env
+
+*__pycache__
