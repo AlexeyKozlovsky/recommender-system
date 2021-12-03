@@ -70,3 +70,27 @@ class ImageTextExtractor:
             frame_count += 1
             next_keyframe += keyframe_interval
         io.open(self.output_p, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
+    
+    def Get_dict_of_phrases_times(sourse_path, output_path):
+        with open(sourse_path, 'r') as read_file:
+            data = json.load(read_file)
+        phrases = []
+        dict_of_phrases = {}
+        time_now = data[0][0]['time']
+        time_before = data[0][0]['time']
+        for main_description in data:
+            frame_phrases = main_description[1]['description'].split('\n')
+            time_before = time_now
+            time_now = main_description[0]['time']
+            for phrase in frame_phrases:
+                if phrase not in phrases:
+                    dict_of_phrases[phrase] = {'time_start' : time_now, 'time_stop' : time_now}
+                    phrases.append(phrase)
+                else:
+                    if dict_of_phrases[phrase]['time_stop'] == time_before:
+                        dict_of_phrases[phrase]['time_stop'] = time_now
+                    else:
+                        phr = phrase + ' '
+                        dict_of_phrases[phr] = {'time_start' : time_now, 'time_stop' : time_now}
+                        phrases.append(phr)
+        io.open(output_path, "w", encoding="utf-8").write(json.dumps(dict_of_phrases, ensure_ascii=False))
