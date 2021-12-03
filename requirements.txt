@@ -4,11 +4,11 @@ pandas
 librosa==0.8.0
 moviepy
 youtube_dl
-youtube_dl
 imutils
 opencv-python
-matplotlib
 google-cloud-vision
 pydantic
 fastapi
 uvicorn
+requests
+fer
