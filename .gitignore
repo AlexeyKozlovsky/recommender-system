@@ -5,9 +5,7 @@
 /nn_models
 *.env
 
-*__pycache__
-*/*__pycache__
-*/*/*__pycache__
+__pycache__/
 
 nohup.out
 *.csv

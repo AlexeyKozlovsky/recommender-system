@@ -32,6 +32,8 @@ def get_words_service(url: str):
         col.insert_one(video_to_db)
         return words_json
 
+
+    del result['_id']
     if 'words' in result.keys():
         words_json = parser.parse(url, None)
         col.update_one({'url': url}, {
