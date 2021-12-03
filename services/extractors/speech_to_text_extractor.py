@@ -1,6 +1,7 @@
 import os
 import json
 import math
+import io
 
 import vosk
 import librosa
@@ -87,5 +88,10 @@ class SpeechToTextExtractor:
         # df.append({'conf': name}, ignore_index=True)
         # if out_path is not None:
         #     df.to_csv(out_path, index=False)
-            
+
+        # with open(out_path, 'w') as f:
+        #     json.dump(res, f)
+
+        if out_path:
+            io.open(out_path, "w", encoding="utf-8").write(json.dumps(res, ensure_ascii=False))
         return res

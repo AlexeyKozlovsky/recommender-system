@@ -12,6 +12,8 @@ fastapi
 uvicorn
 requests
 fer
-pymongo
+PyMongo
 python-dotenv
 fer
+easyocr
+transliterate
