@@ -25,7 +25,7 @@ class Parser:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
-        result_json = self.speech_to_text_extractor.get_info(temp_video_path, out_path, url)
+        result_json = self.speech_to_text_extractor.get_info(temp_video_path, delete=True)
 
         if os.path.exists(temp_video_path):
             os.remove(temp_video_path)

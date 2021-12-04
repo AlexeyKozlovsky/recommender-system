@@ -50,7 +50,7 @@ class SpeechToTextExtractor:
 
         return result
     
-    def get_info(self, input_path, out_path=None, name=None):
+    def get_info(self, input_path, out_path=None, name=None, delete=False):
         vosk.SetLogLevel(-1)
 
         # clip = mp.VideoFileClip(input_path)
@@ -81,9 +81,10 @@ class SpeechToTextExtractor:
 
         # df = pd.DataFrame.from_records(res)
         # df = df.sort_values('start')
-        
-        if os.path.isfile(input_path):
-            os.remove(input_path)
+
+        if delete:
+            if os.path.isfile(input_path):
+                os.remove(input_path)
 
         # df.append({'conf': name}, ignore_index=True)
         # if out_path is not None:
