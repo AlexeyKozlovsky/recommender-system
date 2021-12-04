@@ -16,6 +16,8 @@ api/utils/__pycache__/
 lips_processing/dataset_maker/__pycache__/
 models/__pycache__/
 services/extractors/__pycache__/
+services/integrators/__pycache__/
+services/utils/__pycache__/
 
 nohup.out
 *.csv
