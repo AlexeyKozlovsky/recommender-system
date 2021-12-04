@@ -5,6 +5,8 @@ import pandas as pd
 
 import youtube_dl
 
+from services.extractors.image_text_extractor import ImageTextExtractor
+
 
 class Parser:
     """Класс для парсинга видео с youtube и выделения текста из них"""
@@ -31,6 +33,26 @@ class Parser:
             os.remove(temp_video_path)
 
         return result_json
+
+    def get_annotations(self, url):
+        temp_video_path = 'temp.mp4'
+        if os.path.exists(temp_video_path):
+            os.remove(temp_video_path)
+
+        ydl_opts = {'outtmpl': temp_video_path, 'format': '18'}
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+
+        i2t_extractor = ImageTextExtractor(temp_video_path, None, 'services/extractors/key_data.json')
+        annotations = i2t_extractor.Find_Text_On_Video()
+        result = []
+        for annotation in annotations:
+            if result != 0:
+                if result[-1] == annotation['description']:
+                    continue
+            result.append(annotation['description'])
+
+        return ' '.join(result)
 
     def from_csv(self, csv_path, out_path):
         """Метод для парсинга видео по ссылкам из csv файла

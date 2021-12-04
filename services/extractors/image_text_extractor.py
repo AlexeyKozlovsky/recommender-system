@@ -54,6 +54,7 @@ class ImageTextExtractor:
         finished_frames = 0
         fps = video.get(cv2.CAP_PROP_FPS)
         all_time = video.get(cv2.CAP_PROP_FRAME_COUNT) / fps
+        all_time = video.get(cv2.CAP_PROP_FRAME_COUNT) / 25
         time_koef = all_time / cur_frames
         frame_count = 0
         
@@ -65,14 +66,18 @@ class ImageTextExtractor:
             success, image = video.read()
             retval, buffer = cv2.imencode('.jpg', image)
             jpg_as_text = b64encode(buffer).decode()
-            print(jpg_as_text)
-            self.requestOCR(jpg_as_text, time)
+            try:
+                self.requestOCR(jpg_as_text, time)
+            except KeyError:
+                pass
             finished_frames += 1
             frame_count += 1
             next_keyframe += keyframe_interval
-        io.open(self.output_p, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
+        if self.output_p:
+            io.open(self.output_p, "w", encoding="utf-8").write(json.dumps(self.data_to_write, ensure_ascii=False))
+        return self.data_to_write
     
-    def Get_dict_of_phrases_times(self, sourse_path, output_path):
+    def Get_dict_of_phrases_times(sourse_path, output_path=None):
         with open(sourse_path, 'r') as read_file:
             data = json.load(read_file)
         phrases = []
@@ -94,7 +99,10 @@ class ImageTextExtractor:
                         phr = phrase + ' '
                         dict_of_phrases[phr] = {'time_start' : time_now, 'time_stop' : time_now}
                         phrases.append(phr)
-        io.open(output_path, "w", encoding="utf-8").write(json.dumps(dict_of_phrases, ensure_ascii=False))
+
+        if output_path:
+            io.open(output_path, "w", encoding="utf-8").write(json.dumps(dict_of_phrases, ensure_ascii=False))
+        return dict_of_phrases
  
 class ImageTextExtractor_noGoogle:
     def __init__(self, sourse_path, output_path):
